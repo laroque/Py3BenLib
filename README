@@ -1,0 +1,9 @@
+This is a collection of python3.x utility modules. I am not making any attempt to keep it portable or free of other dependents.
+
+General Notes:
+~Where appropriate, a module will be executable direct from the command line using "default" behavior. This is achieved using "if __name__=='__main__'" type logic at the end of a file.
+~All modules are imported as part of the package (see __init__.py).
+
+Known Dependencies:
+~standard python libraries
+~ROOT (must be compiled using python3 libraries, this means by hand for now)
