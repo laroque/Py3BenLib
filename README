@@ -7,3 +7,6 @@ General Notes:
 Known Dependencies:
 ~standard python libraries
 ~ROOT (must be compiled using python3 libraries, this means by hand for now)
+
+Wishlist:
+~LinearInterp(x_values, y_values, DesiredXs=False, DesiredYs=False): function taking a list of x and y values (min of 2 each, optionally more) and computes a least squares best fit line and computes value of Y at <DesiredXs> and the value of X at <DesiredYs>. Returns the two fit parameters (with uncertainties if a fit) and if points were requested, the values at those points (with optional uncertainties?).
