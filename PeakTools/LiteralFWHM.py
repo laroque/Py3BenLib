@@ -35,7 +35,6 @@ def LiteralFWHM(hist, low, high, givebin=False):
     under = numpy.where(values < halfmax)[0]
     highunderindex = under[under > numpy.where(values == max(values))[0][0]][0]
     lowunderindex = under[under < numpy.where(values == max(values))[0][0]][-1]
-    print("\n\n low and high under indexes are: " + str(lowunderindex) + " " +str(highunderindex))
     lowunderbin = int(low + lowunderindex)
     highunderbin = int(low + highunderindex)
     xlower1 = hist.GetBinCenter(lowunderbin)
@@ -46,13 +45,8 @@ def LiteralFWHM(hist, low, high, givebin=False):
     yupper1 = hist.GetBinContent(highunderbin)
     xupper2 = hist.GetBinCenter(highunderbin-1)
     yupper2 = hist.GetBinContent(highunderbin-1)
-    print("lowunderbin " + str(lowunderbin))
-    print("highunderbin " +str(highunderbin))
-    print("xlow " +str(xupper1)+" xlow+1 "+str(xupper2))
     xlower = ((halfmax - ylower1) * (xlower2 - xlower1))/(ylower2 - ylower1) + xlower1
     xupper = ((halfmax - yupper1) * (xupper2 - xupper1))/(yupper2 - yupper1) + xupper1
-
-    print ("\n\nxupper is " + str(xupper) + " and xlower is " + str(xlower))
 
     fwhm = xupper - xlower
     return fwhm
