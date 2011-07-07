@@ -2,9 +2,9 @@
 '''
   Find the literal FWHM of a TH1 derived object.
 '''
-import ROOT,numpy
+import ROOT, numpy
 
-def LiteralFWHM(hist, low, high, givebin):
+def LiteralFWHM(hist, low, high, givebin=False):
     '''
       Find the literal FWHM of a peak in an interval. This is done by finding the global max of the interval. From the max moving out, the first bin is found with a value < 1/2 Max. Assuming local linearity and that the bin content is the actual value at the bin center, the location of the half max is estimated. The x-axis distance between these location of these nearest half maxes is taken as the FWHM.
 
@@ -25,16 +25,17 @@ def LiteralFWHM(hist, low, high, givebin):
         low = hist.GetXaxis().FindBin(low)
         high = hist.GetXaxis().FindBin(high)
 
-    # Need to get values for the interval into an array:
+    # Need to get histogram values for the interval into an array:
     values = numpy.array([])
     for binN in range(low, high+1):
-        values = numpy.append(values,hist.GetBinContent(binN))
+        values = numpy.append(values, hist.GetBinContent(binN))
 
     # Find each half max position
     halfmax = max(values) / 2.
     under = numpy.where(values < halfmax)[0]
-    highunderindex = numpy.where(under > numpy.where(values == max(values))[0][0])[0][0]
-    lowunderbin = int(low + under[highunderindex - 1])
+    highunderindex = under[under > numpy.where(values == max(values))[0][0]][0]
+    lowunderindex = under[under < numpy.where(values == max(values))[0][0]][-1]
+    lowunderbin = int(low + under[lowunderindex])
     highunderbin = int(low + under[highunderindex])
     xlower1 = hist.GetBinCenter(lowunderbin)
     ylower1 = hist.GetBinContent(lowunderbin)
